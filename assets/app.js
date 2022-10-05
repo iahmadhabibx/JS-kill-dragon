@@ -139,6 +139,7 @@ window.addEventListener("load", () => {
             context.fillStyle = this.color;
             context.shadowOffsetX = 2;
             context.shadowOffsetY = 2;
+            context.shadowColor = 'black';
             context.font = this.fontSize + 'px' + this.fontFamily;
             // Score
             context.fillText('Score: ' + this.game.score, 20, 40);
@@ -148,7 +149,28 @@ window.addEventListener("load", () => {
                 context.fillRect(20 + 5 * i, 50, 3, 20);
             }
 
-            context.restore(); 
+            // Timer
+            const formattedTime = (this.game.gameTime * .001).toFixed(1);
+            context.fillText('Timer: ' + this.game.gameTime, 20, 100);
+
+            // Game over messages
+            if (this.game.isGameOver) {
+                context.textAlign = 'center';
+                let message1, message2;
+                if (this.game.score > this.game.winningScore) {
+                    message1 = 'You won!';
+                    message2 = 'Good Job';
+                } else {
+                    message1 = 'You lost!';
+                    message2 = 'Better luck next time';
+                }
+                context.font = '50px ' + this.fontFamily;
+                context.fillText(message1, this.game.width * 0.5, this.game.height * 0.5 - 20);
+                context.font = '25px ' + this.fontFamily;
+                context.fillText(message2, this.game.width * 0.5, this.game.height * 0.5 + 20);
+            }
+
+            context.restore();
         }
     }
 
@@ -170,9 +192,13 @@ window.addEventListener("load", () => {
             this.isGameOver = false;
             this.score = 0;
             this.winningScore = 20;
+            this.gameTime = 0;
+            this.timeLimit = 5000;
         }
 
         update(deltaTime) {
+            if (!this.isGameOver) this.gameTime += deltaTime;
+            if (this.gameTime > this.timeLimit) this.isGameOver = true;
             this.player.update();
             if (this.ammoTimer > this.ammoInterval) {
                 if (this.ammo < this.maxAmmo) this.ammo++;
@@ -193,7 +219,7 @@ window.addEventListener("load", () => {
                         projectile.markedForDeletion = true;
                         if (enemy.lives <= 0) {
                             enemy.markedForDeletion = true;
-                            this.score += enemy.score;
+                            if (!this.isGameOver) this.score += enemy.score;
                             if (this.score > this.winningScore) this.isGameOver = true;
                         }
                     }
