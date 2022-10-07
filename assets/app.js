@@ -188,7 +188,7 @@ window.addEventListener("load", () => {
 
             // Timer
             const formattedTime = (this.game.gameTime * .001).toFixed(1);
-            context.fillText('Timer: ' + this.game.gameTime, 20, 100);
+            context.fillText('Timer: ' + formattedTime, 20, 100);
 
             // Game over messages
             if (this.game.isGameOver) {
@@ -283,7 +283,7 @@ window.addEventListener("load", () => {
             this.enemies.forEach(enemy => {
                 enemy.draw(context);
             });
-            this.background.layer4.draw();
+            this.background.layer4.draw(context);
         }
 
         addEnemy() {
