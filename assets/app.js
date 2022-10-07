@@ -131,11 +131,12 @@ window.addEventListener("load", () => {
 
         update() {
             if (this.x <= -this.width) this.x = 0;
-            else this.x -= this.game.speed * this.speedMofifier;
+            this.x -= this.game.speed * this.speedMofifier;
         }
 
         draw(context) {
             context.drawImage(this.image, this.x, this.y);
+            context.drawImage(this.image, this.x + this.width, this.y);
         }
     }
 
@@ -143,8 +144,14 @@ window.addEventListener("load", () => {
         constructor(game) {
             this.game = game;;
             this.image1 = document.getElementById("layer1");
-            this.layer1 = new Layer(this.game, this.image1, 1);
-            this.layers = [this.layer1];
+            this.image2 = document.getElementById("layer2");
+            this.image3 = document.getElementById("layer3");
+            this.image4 = document.getElementById("layer4");
+            this.layer1 = new Layer(this.game, this.image1, 0.2);
+            this.layer2 = new Layer(this.game, this.image2, 0.4);
+            this.layer3 = new Layer(this.game, this.image3, 1);
+            this.layer4 = new Layer(this.game, this.image4, 1.5);
+            this.layers = [this.layer1, this.layer2, this.layer3];
         }
 
         update() {
@@ -233,6 +240,7 @@ window.addEventListener("load", () => {
             if (this.gameTime > this.timeLimit) this.isGameOver = true;
 
             this.background.update();
+            this.background.layer4.update();
 
             this.player.update();
             if (this.ammoTimer > this.ammoInterval) {
@@ -275,6 +283,7 @@ window.addEventListener("load", () => {
             this.enemies.forEach(enemy => {
                 enemy.draw(context);
             });
+            this.background.layer4.draw();
         }
 
         addEnemy() {
