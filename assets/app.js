@@ -119,7 +119,6 @@ window.addEventListener("load", () => {
         }
 
     }
-
     class Enemy {
         constructor(game) {
             this.game = game;
@@ -149,7 +148,6 @@ window.addEventListener("load", () => {
             context.fillText(this.lives, this.x, this.y);
         }
     }
-
     class Angler1 extends Enemy {
         constructor(game) {
             super(game);
@@ -162,7 +160,6 @@ window.addEventListener("load", () => {
             this.score = this.lives;
         }
     }
-
     class Angler2 extends Enemy {
         constructor(game) {
             super(game);
@@ -175,7 +172,6 @@ window.addEventListener("load", () => {
             this.score = this.lives;
         }
     }
-
     class LuckyFish extends Enemy {
         constructor(game) {
             super(game);
@@ -189,7 +185,6 @@ window.addEventListener("load", () => {
             this.type = 'lucky';
         }
     }
-
     class Layer {
         constructor(game, image, speedMofifier) {
             this.game = game;
@@ -205,7 +200,6 @@ window.addEventListener("load", () => {
             if (this.x <= -this.width) this.x = 0;
             this.x -= this.game.speed * this.speedMofifier;
         }
-
         draw(context) {
             context.drawImage(this.image, this.x, this.y);
             context.drawImage(this.image, this.x + this.width, this.y);
@@ -277,7 +271,6 @@ window.addEventListener("load", () => {
                 context.font = '25px ' + this.fontFamily;
                 context.fillText(message2, this.game.width * 0.5, this.game.height * 0.5 + 20);
             }
-
             context.restore();
         }
     }
