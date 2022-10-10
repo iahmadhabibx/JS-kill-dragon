@@ -257,7 +257,6 @@ window.addEventListener("load", () => {
             for (let i = 0; i < this.game.ammo; i++) {
                 context.fillRect(20 + 5 * i, 50, 3, 20);
             }
-
             // Timer
             const formattedTime = (this.game.gameTime * .001).toFixed(1);
             context.fillText('Timer: ' + formattedTime, 20, 100);
@@ -282,7 +281,6 @@ window.addEventListener("load", () => {
             context.restore();
         }
     }
-
     class Game {
         constructor(width, height) {
             this.width = width;
@@ -365,14 +363,12 @@ window.addEventListener("load", () => {
             else if (randomize < 0.6) this.enemies.push(new Angler2(this))
             else this.enemies.push(new LuckyFish(this));
         }
-
         checkCollisions(rect1, rect2) {
             return (
                 rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x && rect1.y < rect2.y + rect2.height && rect1.height + rect1.y > rect2.y
             )
         }
     }
-
     const game = new Game(canvas.width, canvas.height);
     let lastTime = 0;
     // Animate Loop
