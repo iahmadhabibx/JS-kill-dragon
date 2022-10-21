@@ -34,14 +34,14 @@ window.addEventListener("load", () => {
             this.height = 3;
             this.speed = 3;
             this.markForDelete = false;
+            this.image = document.getElementById('projectile');
         }
         update() {
             this.x += this.speed;
             if (this.x > this.game.width * 0.8) this.markForDelete = true;
         }
         draw(context) {
-            context.fillStyle = 'yellow';
-            context.fillRect(this.x, this.y, this.width, this.height);
+            context.drawImage(this.image, this.x, this.y);
         }
     }
 
@@ -240,7 +240,7 @@ window.addEventListener("load", () => {
         constructor(game) {
             this.game = game;
             this.fontSize = 25;
-            this.fontFamily = 'Helvetica';
+            this.fontFamily = 'Bangers';
             this.color = 'white';
         }
 
@@ -263,11 +263,11 @@ window.addEventListener("load", () => {
                 context.textAlign = 'center';
                 let message1, message2;
                 if (this.game.score > this.game.winningScore) {
-                    message1 = 'You won!';
-                    message2 = 'Good Job';
+                    message1 = 'Nailed It Rider!';
+                    message2 = 'Well Done Explorer';
                 } else {
-                    message1 = 'You lost!';
-                    message2 = 'Better luck next time';
+                    message1 = 'Can\'t Even Shoot straight!';
+                    message2 = 'Damn hard luck! Try again';
                 }
                 context.font = '50px ' + this.fontFamily;
                 context.fillText(message1, this.game.width * 0.5, this.game.height * 0.5 - 20);
