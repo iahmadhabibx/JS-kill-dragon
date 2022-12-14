@@ -72,7 +72,7 @@ window.addEventListener("load", () => {
         }
 
         draw(context) {
-            context.drawImage(this.image, this.frameX * this, this.spriteSize, this.frameY * this.spriteSize, this.spriteSize, this.spriteSize, this.x, this.y, this.size, this.size)
+            context.drawImage(this.image, this.frameX * this.spriteSize, this.frameY * this.spriteSize, this.spriteSize, this.spriteSize, this.x, this.y, this.size, this.size)
         }
     }
 
@@ -302,7 +302,7 @@ window.addEventListener("load", () => {
                     message1 = 'Can\'t Even Shoot straight!';
                     message2 = 'Damn hard luck! Try again';
                 }
-                context.font = '100px ' + this.fontFamily;
+                context.font = '60px ' + this.fontFamily;
                 context.fillText(message1, this.game.width * 0.5, this.game.height * 0.5 - 20);
                 context.font = '30px ' + this.fontFamily;
                 context.fillText(message2, this.game.width * 0.5, this.game.height * 0.5 + 20);
@@ -340,7 +340,7 @@ window.addEventListener("load", () => {
             this.gameTime = 0;
             this.timeLimit = 15000;
             this.speed = 1;
-            this.debugMode = true;
+            this.debugMode = false;
         }
 
         update(deltaTime) {
