@@ -62,17 +62,28 @@ window.addEventListener("load", () => {
             this.markedForDeletion = false;
             this.angle = 0;
             this.va = Math.random() * .2 - .1;
+            this.bounced = 0;
+            this.bottomBounceBoundary = Math.random() * 100 + 60;
         }
         update() {
             this.angle += this.va;
             this.speedY += this.gravity;
-            this.x -= this.speedX;
+            this.x -= this.speedX + this.game.speed;
             this.y += this.speedY;
             if (this.y > this.game.height + this.size || this.x < 0 - this.size) this.markedForDeletion = true;
+
+            if (this.y > this.game.height - this.bottomBounceBoundary && this.bounced < 2) {
+                this.bounced++;
+                this.speedY *= -.5
+            }
         }
 
         draw(context) {
-            context.drawImage(this.image, this.frameX * this.spriteSize, this.frameY * this.spriteSize, this.spriteSize, this.spriteSize, this.x, this.y, this.size, this.size)
+            context.save();
+            context.translate(this.x, this.y);
+            context.rotate(this.angle);
+            context.drawImage(this.image, this.frameX * this.spriteSize, this.frameY * this.spriteSize, this.spriteSize, this.spriteSize, this.size * -.5, this.size * -.5, this.size, this.size)
+            context.restore();
         }
     }
 
@@ -365,7 +376,7 @@ window.addEventListener("load", () => {
                 enemy.update();
                 if (this.checkCollisions(this.player, enemy)) {
                     enemy.markedForDeletion = true;
-                    for (let i = 0; i < 10; i++) {
+                    for (let i = 0; i < 5; i++) {
                         this.particles.push(new Particle(this, enemy.x + enemy.width * .5, enemy.y + enemy.height * .5));
                     }
                     if (enemy.type && enemy.type === 'lucky') this.player.enterPowerUp();
@@ -378,6 +389,9 @@ window.addEventListener("load", () => {
                         projectile.markedForDeletion = true;
                         this.particles.push(new Particle(this, enemy.x + enemy.width * .5, enemy.y + enemy.height * .5));
                         if (enemy.lives <= 0) {
+                            for (let i = 0; i < 5; i++) {
+                                this.particles.push(new Particle(this, enemy.x + enemy.width * .5, enemy.y + enemy.height * .5));
+                            }
                             enemy.markedForDeletion = true;
                             if (!this.isGameOver) this.score += enemy.score;
                             if (this.score > this.winningScore) this.isGameOver = true;
