@@ -63,7 +63,7 @@ window.addEventListener("load", () => {
             this.angle = 0;
             this.va = Math.random() * .2 - .1;
             this.bounced = 0;
-            this.bottomBounceBoundary = Math.random() * 100 + 60;
+            this.bottomBounceBoundary = Math.random() * 80 + 60;
         }
         update() {
             this.angle += this.va;
@@ -164,7 +164,7 @@ window.addEventListener("load", () => {
         enterPowerUp() {
             this.powerUpTimer = 0;
             this.powerUp = true;
-            this.game.ammo = this.game.maxAmmo;
+            if (this.game.ammo < this.game.maxAmmo) this.game.ammo = this.game.maxAmmo;
         }
 
     }
@@ -409,8 +409,8 @@ window.addEventListener("load", () => {
         }
         draw(context) {
             this.background.draw(context);
-            this.player.draw(context);
             this.ui.draw(context);
+            this.player.draw(context);
             this.particles.forEach(particle => particle.draw(context))
             this.enemies.forEach(enemy => enemy.draw(context));
             this.background.layer4.draw(context);
